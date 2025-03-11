@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menú principal -->
+        <menuitem id="menu_iliketrains_root" 
+                  name="Trenes" 
+                  sequence="100" 
+                  web_icon="iliketrains,static/description/icon.png"/>
+
+        <!-- Submenú para billetes -->
+        <menuitem id="menu_train_tickets"
+                  name="Billetes"
+                  parent="menu_iliketrains_root"
+                  action="action_train_ticket"
+                  sequence="10"/>
+
+        <!-- Submenú para proveedores -->
+        <menuitem id="menu_train_providers"
+                  name="Proveedores"
+                  parent="menu_iliketrains_root"
+                  action="action_train_provider"
+                  sequence="20"/>
+
+        <!-- Submenú para facturas -->
+        <menuitem id="menu_train_payments"
+                  name="Facturas"
+                  parent="menu_iliketrains_root"
+                  action="action_train_payment"
+                  sequence="30"/>
+
+        <!-- Submenú para configuración -->
+        <menuitem id="menu_train_configuration"
+                  name="Configuración"
+                  parent="menu_iliketrains_root"
+                  sequence="100"/>
+
+        <!-- Elementos de menú de configuración -->
+        <menuitem id="menu_train_routes"
+                  name="Rutas"
+                  parent="menu_train_configuration"
+                  action="action_train_route"
+                  sequence="10"/>
+
+        <menuitem id="menu_train_stations"
+                  name="Estaciones"
+                  parent="menu_train_configuration"
+                  action="action_train_station"
+                  sequence="20"/>
+    </data>
+</odoo>

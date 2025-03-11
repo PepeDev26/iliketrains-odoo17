@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de formulario -->
+        <record id="view_train_route_form" model="ir.ui.view">
+            <field name="name">train.route.form</field>
+            <field name="model">train.route</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="departure_station_id"/>
+                                <field name="arrival_station_id"/>
+                            </group>
+                            <group>
+                                <field name="duration"/>
+                                <field name="distance"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de lista -->
+        <record id="view_train_route_tree" model="ir.ui.view">
+            <field name="name">train.route.tree</field>
+            <field name="model">train.route</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="departure_station_id"/>
+                    <field name="arrival_station_id"/>
+                    <field name="duration"/>
+                    <field name="distance"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Acción -->
+        <record id="action_train_route" model="ir.actions.act_window">
+            <field name="name">Rutas de Tren</field>
+            <field name="res_model">train.route</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea tu primera ruta de tren
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

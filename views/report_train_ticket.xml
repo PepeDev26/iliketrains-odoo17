@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Plantilla de reporte para billetes de tren -->
+        <template id="report_train_ticket_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <h2>Billete de Tren</h2>
+                        <div class="row mt32 mb32">
+                            <div class="col-6">
+                                <strong>Referencia:</strong> <span t-field="doc.name"/>
+                                <br/>
+                                <!-- Temporalmente comentado -->
+                                <!-- <strong>Código de Billete:</strong> <span t-field="doc.ticket_code"/> 
+                                <br/> -->
+                                <strong>Empleado:</strong> <span t-field="doc.employee_id"/>
+                                <br/>
+                                <strong>Proveedor:</strong> <span t-field="doc.provider_id"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Ruta:</strong> <span t-field="doc.route_id"/>
+                                <br/>
+                                <strong>Fecha de Viaje:</strong> <span t-field="doc.travel_date"/>
+                                <br/>
+                                <strong>Estado:</strong> <span t-field="doc.state"/>
+                                <br/>
+                                <strong>Factura:</strong> <span t-field="doc.payment_id.name"/>
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>Precio:</strong> <span t-field="doc.price"/> €
+                            </div>
+                        </div>
+                        <div t-if="doc.notes" class="row mt32">
+                            <div class="col-12">
+                                <strong>Notas:</strong>
+                                <p t-field="doc.notes"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!-- Acción de reporte -->
+        <record id="action_report_train_ticket" model="ir.actions.report">
+            <field name="name">Imprimir Billete</field>
+            <field name="model">train.ticket</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iliketrains.report_train_ticket_document</field>
+            <field name="report_file">iliketrains.report_train_ticket_document</field>
+            <field name="binding_model_id" ref="model_train_ticket"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

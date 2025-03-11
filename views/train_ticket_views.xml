@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de formulario -->
+        <record id="view_train_ticket_form" model="ir.ui.view">
+            <field name="name">train.ticket.form</field>
+            <field name="model">train.ticket</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,reimbursed,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="provider_id"/>
+                                <field name="route_id"/>
+                                <!-- Temporalmente comentado hasta que el modelo se actualice -->
+                                <!-- <field name="ticket_code"/> -->
+                            </group>
+                            <group>
+                                <field name="travel_date"/>
+                                <field name="price"/>
+                                <!-- Temporalmente comentado hasta que el modelo se actualice -->
+                                <!-- <field name="currency_id" options="{'no_create': True}"/> -->
+                                <field name="payment_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Billete">
+                                <group>
+                                    <field name="ticket_file" filename="ticket_filename" widget="binary"/>
+                                    <field name="ticket_filename" invisible="1"/>
+                                </group>
+                                <!-- Reemplazamos el atributo attrs con una condición estática -->
+                                <div class="alert alert-info" role="alert" invisible="ticket_file">
+                                    <strong>Carga el archivo PDF del billete haciendo clic en el botón "Cargar" arriba.</strong>
+                                </div>
+                            </page>
+                            <page string="Factura">
+                                <group>
+                                    <field name="invoice_number"/>
+                                    <field name="invoice_date"/>
+                                    <field name="invoice_file" filename="invoice_filename" widget="binary"/>
+                                    <field name="invoice_filename" invisible="1"/>
+                                </group>
+                            </page>
+                            <page string="Notas">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de lista -->
+        <record id="view_train_ticket_tree" model="ir.ui.view">
+            <field name="name">train.ticket.tree</field>
+            <field name="model">train.ticket</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-success="state == 'confirmed'" decoration-warning="state == 'reimbursed'" decoration-danger="state == 'cancelled'">
+                    <field name="name"/>
+                    <!-- <field name="ticket_code"/> -->
+                    <field name="employee_id"/>
+                    <field name="provider_id"/>
+                    <field name="route_id"/>
+                    <field name="travel_date"/>
+                    <field name="price" sum="Total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista kanban -->
+        <record id="view_train_ticket_kanban" model="ir.ui.view">
+            <field name="name">train.ticket.kanban</field>
+            <field name="model">train.ticket</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="provider_id"/>
+                    <field name="route_id"/>
+                    <field name="travel_date"/>
+                    <field name="price"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong><field name="name"/></strong>
+                                    <div>Empleado: <field name="employee_id"/></div>
+                                    <div>Proveedor: <field name="provider_id"/></div>
+                                    <div>Ruta: <field name="route_id"/></div>
+                                    <div>Fecha: <field name="travel_date"/></div>
+                                    <div>Precio: <field name="price"/></div>
+                                    <div>Estado: <field name="state"/></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Vista de búsqueda -->
+        <record id="view_train_ticket_search" model="ir.ui.view">
+            <field name="name">train.ticket.search</field>
+            <field name="model">train.ticket</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <!-- <field name="ticket_code"/> -->
+                    <field name="employee_id"/>
+                    <field name="provider_id"/>
+                    <field name="route_id"/>
+                    <field name="travel_date"/>
+                    <field name="state"/>
+                    <filter string="Borrador" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmado" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Reembolsado" name="reimbursed" domain="[('state', '=', 'reimbursed')]"/>
+                    <filter string="Cancelado" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <group expand="0" string="Agrupar por">
+                        <filter string="Empleado" name="employee" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Proveedor" name="provider" context="{'group_by': 'provider_id'}"/>
+                        <filter string="Ruta" name="route" context="{'group_by': 'route_id'}"/>
+                        <filter string="Fecha de Viaje" name="travel_date" context="{'group_by': 'travel_date'}"/>
+                        <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Acción -->
+        <record id="action_train_ticket" model="ir.actions.act_window">
+            <field name="name">Billetes de Tren</field>
+            <field name="res_model">train.ticket</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_train_ticket_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea tu primer billete de tren
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
+

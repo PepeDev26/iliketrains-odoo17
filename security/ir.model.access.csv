@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_train_ticket,access_train_ticket,model_train_ticket,base.group_user,1,1,1,1
+access_train_provider,access_train_provider,model_train_provider,base.group_user,1,1,1,1
+access_train_route,access_train_route,model_train_route,base.group_user,1,1,1,1
+access_train_station,access_train_station,model_train_station,base.group_user,1,1,1,1
+access_train_payment,access_train_payment,model_train_payment,base.group_user,1,1,1,1
+
+access_train_ticket_manager,access_train_ticket_manager,iliketrains.model_train_ticket,base.group_system,1,1,1,1
+access_train_route_manager,access_train_route_manager,iliketrains.model_train_route,base.group_system,1,1,1,1
+access_train_station_manager,access_train_station_manager,iliketrains.model_train_station,base.group_system,1,1,1,1
+access_train_payment_manager,access_train_payment_manager,iliketrains.model_train_payment,base.group_system,1,1,1,1
+access_train_provider_manager,access_train_provider_manager,iliketrains.model_train_provider,base.group_system,1,1,1,1

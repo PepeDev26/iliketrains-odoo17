@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista de formulario -->
+        <record id="view_train_provider_form" model="ir.ui.view">
+            <field name="name">train.provider.form</field>
+            <field name="model">train.provider</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="website"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notas">
+                                <field name="notes"/>
+                            </page>
+                            <page string="Billetes">
+                                <field name="ticket_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista de lista -->
+        <record id="view_train_provider_tree" model="ir.ui.view">
+            <field name="name">train.provider.tree</field>
+            <field name="model">train.provider</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="website"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Acción -->
+        <record id="action_train_provider" model="ir.actions.act_window">
+            <field name="name">Proveedores de Tren</field>
+            <field name="res_model">train.provider</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea tu primer proveedor de billetes
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
